@@ -20,7 +20,7 @@ extern "C" {
 #define SENSE_TEMP 10
 #define GRIND_PUSHED 10
 #define BREW_PUSHED 10
-#define SWITCHES_CLOSED 10
+#define SWITCHES_CLOSED 1
 
 // TIMER TARGETS
 #define TIMER4_TARGET 4
@@ -29,6 +29,12 @@ extern "C" {
     
 #define CYCLES_PER_SECOND 24
 #define TARGET_CLEAR_VALUE 99
+    
+//LCD Buffer Variable Locations
+#define BUFFER_START_00 5
+#define BUFFER_START_01 5
+#define BUFFER_START_20 9
+#define BUFFER_START_30 9
 
 //timer global variables
 unsigned char masterHour = 0;
@@ -63,24 +69,15 @@ unsigned char timer40Count = 0;
 //state variables
 unsigned char machineState = 0; // [0:3]
 unsigned char settingState = 0; // 0 -> nothing, 1 -> grind, 2 -> brew
+unsigned char menuState    = 0; // "GUI"
 
-//hex_keypad variables
-char keypadInput = 'Z';
-//#define keypad1 PORTCbits.RC6
-//#define keypad2 PORTBbits.RB5
-//#define keypad3 PORTCbits.RC0
-//#define keypad4 PORTCbits.RC3
-//#define keypad5 PORTBbits.RB6
-//#define keypad6 PORTCbits.RC1
-//#define keypad7 PORTCbits.RC4
-//#define keypad8 PORTBbits.RB7
-//#define keypad9 PORTCbits.RC2
-//#define keypad0 PORTCbits.RC7
-//#define keypadS PORTCbits.RC5
-//#define keypadP PORTBbits.RB4
+//Character buffers
+char lcdBuffers[4][32] = {"     __:__      X    __:__        1: Set Alarm    2: Set Clock    Alarm: __:__  1:Grind   2:Brew   Time: __:__                  "};
+char inputBuffer[4];
 
-//hex_keypad flags
-unsigned inputRecieved = 0;
+//character buffer position
+unsigned char iBuffer = 0;
+
 
 #ifdef	__cplusplus
 }

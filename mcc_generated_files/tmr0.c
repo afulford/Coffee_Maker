@@ -54,6 +54,7 @@ SUBSTITUTE GOODS, TECHNOLOGY, SERVICES, OR ANY CLAIMS BY THIRD PARTIES
 
 void updateClock(void);
 void checkUserTimers(void);
+void updateClockOutput(void);
 void checkClockForTarget(void);
 
 /**
@@ -142,7 +143,6 @@ void TMR0_ISR(void)
     // Update Clock and possibly set updateLCD flag
     updateClock();
     checkClockForTarget();
-    
     // Read Inputs and possibly set updateLCD flag
     
     //***************************************************
@@ -168,21 +168,21 @@ void updateClock(void){
 void checkUserTimers(void){
     if (timer4Set){
         if (++timer4Count > TIMER4_TARGET){
-            timer4Set     = 0;
+            //timer4Set     = 0;
             timer4Count   = 0;
             timer4Expired = 1;
         }
     }
     if (timer5Set){
         if (++timer5Count > TIMER5_TARGET){
-            timer5Set     = 0;
+            //timer5Set     = 0;
             timer5Count   = 0;
             timer5Expired = 1;
         }
     }
     if (timer40Set){
         if (++timer40Count > TIMER40_TARGET){
-            timer40Set     = 0;
+            //timer40Set     = 0;
             timer40Count   = 0;
             timer40Expired = 1;
         }
@@ -198,6 +198,10 @@ void checkClockForTarget(void){
             }
         }
     }
+}
+
+void updateClockOutput(void){
+  int x = 0;  
 }
 
 /**

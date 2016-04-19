@@ -47,11 +47,13 @@ SUBSTITUTE GOODS, TECHNOLOGY, SERVICES, OR ANY CLAIMS BY THIRD PARTIES
 #include "mcc_generated_files/mcc.h"
 #include "mcc_generated_files/globalHeader.h"
 
-void runMenu(void);
-void updateLCD(void);
-char readKeypad(void);
+void runMenu(char);
 void executeMenu(void);
+void initLcdBuffers(void);
 void runStateMachine(void);
+void updateLcd(unsigned char);
+unsigned char readKeypad(void);
+void processBuffer(unsigned char index);
 /*
                          Main application
  */
@@ -92,12 +94,13 @@ void main(void)
     
     while (1)
     {
-        runMenu();
-        ch = readKeypad();
+        if ((ch = readKeypad()) != 'Z'){
+            runMenu(ch);
+        }
         runStateMachine();
         
         if (lcdNeedsUpdate){
-            updateLCD();
+            updateLcd(0);
         }
     }
     return;
@@ -162,6 +165,8 @@ void runStateMachine(void){
                     MOTOR_OFF;
                     machineState = 0;
                     timer40Set = 0;
+                    timer40Expired = 0;
+                    timer40Count = 0;
                 }
                 break;
                 
@@ -204,6 +209,12 @@ void runStateMachine(void){
                 } else {
                     MOTOR_OFF;
                     HEATER_OFF;
+                    timer4Set = 0;
+                    timer5Set = 0;
+                    timer4Count = 0;
+                    timer5Count = 0;
+                    timer5Expired = 0;
+                    timer4Expired = 0;
                     machineState = 0;
                 }
                 break;
@@ -211,7 +222,6 @@ void runStateMachine(void){
 }
 
 char readKeypad(void){
-    // to be developed
     unsigned char keypadInput = 'Z';
     unsigned char keypad1 = PORTCbits.RC5;
     unsigned char keypad2 = PORTCbits.RC2;
@@ -265,12 +275,109 @@ char readKeypad(void){
     return keypadInput;
 }
 
-void runMenu(void){
+void runMenu(unsigned char key){
+    switch(menuState){
+        case 0:
+            // update LCD only
+            break;
+        case 1:
+            if (key == '1'){
+                menuState = 2;
+            }
+            else if (key == '2'){
+                menuState = 3;
+            }
+            else if (key == '*'){
+                menuState = 0;
+            }
+            break;
+            
+        case 2:
+            if (key == '#'){
+                processBuffer(menuState);
+                menuState = 0;
+            }
+            else if (key == '*'){
+                menuState = 1;
+            }
+            else if ((key >= '0') && (key <= '9')){
+                inputBuffer[iBuffer++] = (char)key;
+                if (iBuffer > 3) {
+                    iBuffer = 0;
+                }
+            }
+            break;
+            
+        case 3:
+            if (key == '#'){
+                processBuffer(menuState);
+                menuState = 4;
+            }
+            else if (key == '*'){
+                menuState = 1;
+            }
+            else if ((key >= '0') && (key <= '9')){
+                inputBuffer[iBuffer++] = key;
+                if (iBuffer > 3) {
+                    iBuffer = 0;
+                }
+            }
+            break;
+        case 4:
+            if (key == '1'){
+                settingState = key;
+                lcdBuffers[1][0] = 'G';
+                menuState = 0;
+            }
+            if (key == '2'){
+                settingState = key;
+                lcdBuffers[1][0] = 'B';
+                menuState = 0;
+            }
+    }
+    updateLcd(menuState);
+}
+
+void processBuffer(unsigned char index){
+    switch (index){
+        case 0: //main clock time
+            lcdBuffers[0][BUFFER_START_00  ] = inputBuffer[0];
+            lcdBuffers[0][BUFFER_START_00+1] = inputBuffer[1];
+            lcdBuffers[0][BUFFER_START_00+3] = inputBuffer[2];
+            lcdBuffers[0][BUFFER_START_00+4] = inputBuffer[3];
+            break;
+        case 1: //main alarm time
+            lcdBuffers[0][BUFFER_START_01  ] = inputBuffer[0];
+            lcdBuffers[0][BUFFER_START_01+1] = inputBuffer[1];
+            lcdBuffers[0][BUFFER_START_01+3] = inputBuffer[2];
+            lcdBuffers[0][BUFFER_START_01+4] = inputBuffer[3];
+            break;
+        case 2: //set alarm time
+            lcdBuffers[0][BUFFER_START_20  ] = inputBuffer[0];
+            lcdBuffers[0][BUFFER_START_20+1] = inputBuffer[1];
+            lcdBuffers[0][BUFFER_START_20+3] = inputBuffer[2];
+            lcdBuffers[0][BUFFER_START_20+4] = inputBuffer[3];
+            break;
+        case 3: //set clock time
+            lcdBuffers[0][BUFFER_START_30  ] = inputBuffer[0];
+            lcdBuffers[0][BUFFER_START_30+1] = inputBuffer[1];
+            lcdBuffers[0][BUFFER_START_30+3] = inputBuffer[2];
+            lcdBuffers[0][BUFFER_START_30+4] = inputBuffer[3];
+            break;
+    }
+    iBuffer = 0;
+}
+
+void updateLcd(unsigned char index){
     // to be developed
 }
 
-void updateLCD(void){
-    // to be developed
+void initLcdBuffers(void){
+    int i = 0;
+    char* ptr1 = "     __:__      \0";
+    while (*(ptr1++) != '\0'){
+        lcdBuffers[0][i++] = ptr1[-1];
+    }
 }
 /**
  End of File
