@@ -1,3 +1,10 @@
+<<<<<<< HEAD
 /build/default/
 /dist/default/
 /nbproject/private/
+=======
+dist/**
+build/**
+nbproject/**
+*.docx
+>>>>>>> a52216df021a68dcfddf95db096ee5e6cf01a739
