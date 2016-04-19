@@ -108,69 +108,104 @@ void runStateMachine(void){
             case 0: //idle
                 MOTOR_OFF;
                 HEATER_OFF;
-                // if (SWITCHES_CLOSED)
-                    // if targetAcquired
+                
+                if (SWITCHES_CLOSED){
+                    if (targetAcquired){
                         // set grind cmd or brew cmd based on flag
-                    // if GRIND_PUSHED
-                        // grindCommand = true
-                    // if brewButtonPushed
-                        // brewCommand = true
-                    //if grindCmd
-                        // machineState = 1
-                    //if brewCmd
-                        // machineState = 2
+                        if (settingState == 0){
+                            brewCommand = grindCommand = 0;
+                        }
+                        else if (settingState == 1){
+                            grindCommand = 1;
+                        }
+                        else if (settingState == 2){
+                            brewCommand = 1;
+                        }
+                    }
+                        
+                    if (GRIND_PUSHED){
+                        grindCommand = 1;
+                    }
+                        
+                    if (BREW_PUSHED){
+                        brewCommand = 1;
+                    }
+                        
+                    if (grindCommand){
+                        machineState = 1;
+                    }
+                    if (brewCommand){
+                        machineState = 2;
+                    }
+                }
                 break;
                 
             case 1: //grinding
-                // if (SWITCHES_CLOSED)
+                if (SWITCHES_CLOSED){
                     MOTOR_ON;
                     HEATER_OFF;
-                    // if timer40 not set
-                        // set timer40
-                    // if timer40 expired
-                        // machineState = 2
-                        //MOTOR_OFF;
-                    // if brewButtonPushed
-                        // brewCommand = true
-                        //MOTOR_OFF
-                        //machineState = 2
-                // else
-                    //MOTOR_OFF;
-                    //machineState = 0;
+                    if (!timer40Set){
+                        timer40Set = 1;
+                    }
+                    if (timer40Expired){
+                        timer40Set = 0;
+                        machineState = 2;
+                        MOTOR_OFF;
+                    }
+                    if (BREW_PUSHED){
+                        //brewCommand = 1;
+                        timer40Set = 0;
+                        MOTOR_OFF;
+                        machineState = 2;
+                    }
+                } else {
+                    MOTOR_OFF;
+                    machineState = 0;
+                    timer40Set = 0;
+                }
                 break;
                 
             case 2: //brewing
-                // if (SWITCHES_CLOSED)
+                if (SWITCHES_CLOSED){
                     HEATER_ON;
                     MOTOR_OFF;
                     // if SENSE_TEMP is 4V
                         //HEATER_OFF
                         //machineState = 3
-                    // if grindButtonPushed
-                        // grindCommand = true
-                        //HEATER_OFF
-                        //machineState = 1
-                 // else
-                    // HEATER_OFF;
-                    //machineState = 0;
+                    if (GRIND_PUSHED){
+                        //grindCommand = 1;
+                        HEATER_OFF;
+                        machineState = 1;
+                    }
+                } else {
+                    HEATER_OFF;
+                    machineState = 0;
+                }
                 break;
                 
             case 3: //cleaning
-                //if switches closed
-                    //if timer4 not set
-                        //set timer4
-                    // if timer4 expired
-                        //timer4expired = false
-                        //set timer 5
+                if (SWITCHES_CLOSED){
+                    if (!timer4Set){
+                        timer4Set = 1;
+                    }
+                    if (timer4Expired){
+                        //timer4Set = 0;
+                        timer4Expired = 0;
+                        timer5Set = 1;
                         MOTOR_ON;
-                    // if timer5 expired
-                        // timer5 expired = false
+                    }
+                    if (timer5Expired){
+                        timer4Set = 0;
+                        timer5Set = 0;
+                        timer5Expired = 0;
                         MOTOR_OFF;
                         machineState = 0;
-                // else
-                    // MOTOR_OFF
-                    // HEATER_OFF
-                    // machineState = 0
+                    }
+                } else {
+                    MOTOR_OFF;
+                    HEATER_OFF;
+                    machineState = 0;
+                }
                 break;
         }
 }

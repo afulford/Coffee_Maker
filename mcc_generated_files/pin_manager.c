@@ -50,22 +50,22 @@ void PIN_MANAGER_Initialize(void)
 {
     LATB = 0x0;
     LATA = 0x0;
-    ANSELE = 0x7;
+    ANSELE = 0x0;
     LATE = 0x0;
     LATD = 0x0;
     LATC = 0x0;
-    ANSELA = 0x2F;
-    ANSELB = 0x3F;
+    ANSELA = 0x1;
+    ANSELB = 0x7;
     ANSELC = 0xC0;
-    ANSELD = 0xF0;
+    ANSELD = 0x30;
     WPUB = 0xFF;
-    TRISD = 0xFF;
-    TRISE = 0x7;
-    TRISB = 0xFF;
+    TRISD = 0x3F;
+    TRISE = 0x0;
+    TRISB = 0xE7;
     TRISC = 0xFF;
-    TRISA = 0xFF;
+    TRISA = 0xC0;
 
-    INTCON2bits.nRBPU = 0x1;
+    INTCON2bits.nRBPU = 0x0;
 
     // enable interrupt-on-change globally
     // interrupts-on-change are globally disabled
