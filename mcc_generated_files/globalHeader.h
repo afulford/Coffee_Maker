@@ -72,7 +72,7 @@ unsigned char settingState = 0; // 0 -> nothing, 1 -> grind, 2 -> brew
 unsigned char menuState    = 0; // "GUI"
 
 //Character buffers
-char lcdBuffers[4][32] = {"     __:__      X    __:__        1: Set Alarm    2: Set Clock    Alarm: __:__  1:Grind   2:Brew   Time: __:__                  "};
+char lcdBuffers[4][32] = {""};//{"     __:__      X    __:__        1: Set Alarm    2: Set Clock    Alarm: __:__  1:Grind   2:Brew   Time: __:__                  "};
 char inputBuffer[4];
 
 //character buffer position
