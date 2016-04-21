@@ -347,22 +347,22 @@ void processBuffer(unsigned char index){
             lcdBuffers[0][BUFFER_START_00+4] = inputBuffer[3];
             break;
         case 1: //main alarm time
-            lcdBuffers[0][BUFFER_START_01  ] = inputBuffer[0];
-            lcdBuffers[0][BUFFER_START_01+1] = inputBuffer[1];
-            lcdBuffers[0][BUFFER_START_01+3] = inputBuffer[2];
-            lcdBuffers[0][BUFFER_START_01+4] = inputBuffer[3];
+            lcdBuffers[1][BUFFER_START_01  ] = inputBuffer[0];
+            lcdBuffers[1][BUFFER_START_01+1] = inputBuffer[1];
+            lcdBuffers[1][BUFFER_START_01+3] = inputBuffer[2];
+            lcdBuffers[1][BUFFER_START_01+4] = inputBuffer[3];
             break;
         case 2: //set alarm time
-            lcdBuffers[0][BUFFER_START_20  ] = inputBuffer[0];
-            lcdBuffers[0][BUFFER_START_20+1] = inputBuffer[1];
-            lcdBuffers[0][BUFFER_START_20+3] = inputBuffer[2];
-            lcdBuffers[0][BUFFER_START_20+4] = inputBuffer[3];
+            lcdBuffers[4][BUFFER_START_20  ] = inputBuffer[0];
+            lcdBuffers[4][BUFFER_START_20+1] = inputBuffer[1];
+            lcdBuffers[4][BUFFER_START_20+3] = inputBuffer[2];
+            lcdBuffers[4][BUFFER_START_20+4] = inputBuffer[3];
             break;
         case 3: //set clock time
-            lcdBuffers[0][BUFFER_START_30  ] = inputBuffer[0];
-            lcdBuffers[0][BUFFER_START_30+1] = inputBuffer[1];
-            lcdBuffers[0][BUFFER_START_30+3] = inputBuffer[2];
-            lcdBuffers[0][BUFFER_START_30+4] = inputBuffer[3];
+            lcdBuffers[6][BUFFER_START_30  ] = inputBuffer[0];
+            lcdBuffers[6][BUFFER_START_30+1] = inputBuffer[1];
+            lcdBuffers[6][BUFFER_START_30+3] = inputBuffer[2];
+            lcdBuffers[6][BUFFER_START_30+4] = inputBuffer[3];
             break;
     }
     iBuffer = 0;

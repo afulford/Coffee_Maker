@@ -31,13 +31,13 @@ extern "C" {
 #define TARGET_CLEAR_VALUE 99
     
 //LCD messages
-#define LINE00 "     __:__      \0"
-#define LINE01 " X   __:__      \0"
+#define LINE00 "     __:__      \0" //main clock time
+#define LINE01 " X   __:__      \0" //main alarm time
 #define LINE10 "  1: Set Alarm  \0"
 #define LINE11 "  2: Set Clock  \0"
-#define LINE20 "  Alarm: __:__  \0"
+#define LINE20 "  Alarm: __:__  \0" //set alarm time
 #define LINE21 "1:Grind   2:Brew\0"
-#define LINE30 "  Time: __:__   \0"
+#define LINE30 "  Time: __:__   \0" //set clock time
 #define LINE31 "                \0"
 
 //LCD Buffer Variable Locations
