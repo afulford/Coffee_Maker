@@ -101,6 +101,7 @@ void main(void)
         runStateMachine();
         
         if (lcdNeedsUpdate){
+            lcdNeedsUpdate = 0;
             updateLcd(menuState);
         }
     }
