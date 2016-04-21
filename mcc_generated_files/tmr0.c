@@ -202,13 +202,6 @@ void checkClockForTarget(void){
     }
 }
 
-<<<<<<< HEAD
-void updateClockOutput(void){
-    lcdBuffers[0][BUFFER_START_00  ] = inputBuffer[0];
-    lcdBuffers[0][BUFFER_START_00+1] = inputBuffer[1];
-    lcdBuffers[0][BUFFER_START_00+3] = inputBuffer[2];
-    lcdBuffers[0][BUFFER_START_00+4] = inputBuffer[3];
-=======
 void updateClockOutput(char key){
   switch(key){
     case 'm':
@@ -221,7 +214,6 @@ void updateClockOutput(char key){
         break;
   }
   lcdNeedsUpdate = 1;
->>>>>>> d1fa55806609964218023efd111964e6aa1e265a
 }
 
 /**
