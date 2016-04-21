@@ -29,6 +29,10 @@ extern "C" {
     
 #define CYCLES_PER_SECOND 24
 #define TARGET_CLEAR_VALUE 99
+
+#define SECONDS_PER_MINUTE 60
+#define MINUTES_PER_HOUR 60
+#define HOURS_PER_DAY 24
     
 //LCD messages
 #define LINE00 "     __:__      \0" //main clock time

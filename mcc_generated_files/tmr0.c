@@ -54,7 +54,7 @@ SUBSTITUTE GOODS, TECHNOLOGY, SERVICES, OR ANY CLAIMS BY THIRD PARTIES
 
 void updateClock(void);
 void checkUserTimers(void);
-void updateClockOutput(void);
+void updateClockOutput(char);
 void checkClockForTarget(void);
 
 /**
@@ -152,13 +152,14 @@ void updateClock(void){
     if (++masterCycles >= CYCLES_PER_SECOND){
         masterCycles = 0;
         checkUserTimers();
-        if (++masterSecond > 59){
+        if (++masterSecond >= SECONDS_PER_MINUTE){
             masterSecond = 0;
-            updateClockOutput();
-            if (++masterMinute > 59){
+            updateClockOutput('m');
+            if (++masterMinute >= MINUTES_PER_HOUR){
                 masterMinute = 0;
                 newMinuteOccurred = 1;
-                if (++masterHour > 23){
+                updateClockOutput('h');
+                if (++masterHour >= HOURS_PER_DAY){
                     masterHour = 0;
                 }
             }
@@ -201,11 +202,26 @@ void checkClockForTarget(void){
     }
 }
 
+<<<<<<< HEAD
 void updateClockOutput(void){
     lcdBuffers[0][BUFFER_START_00  ] = inputBuffer[0];
     lcdBuffers[0][BUFFER_START_00+1] = inputBuffer[1];
     lcdBuffers[0][BUFFER_START_00+3] = inputBuffer[2];
     lcdBuffers[0][BUFFER_START_00+4] = inputBuffer[3];
+=======
+void updateClockOutput(char key){
+  switch(key){
+    case 'm':
+        lcdBuffers[0][BUFFER_START_00+3] =  int(masterMinute)%10;     //tens
+        lcdBuffers[0][BUFFER_START_00+4] = (int(masterMinute)/10)%10; //ones
+        break;
+    case 'h':
+        lcdBuffers[0][BUFFER_START_00+0] =  int(masterHour)%10;       //tens
+        lcdBuffers[0][BUFFER_START_00+1] = (int(masterHour)/10)%10;   //ones
+        break;
+  }
+  lcdNeedsUpdate = 1;
+>>>>>>> d1fa55806609964218023efd111964e6aa1e265a
 }
 
 /**
