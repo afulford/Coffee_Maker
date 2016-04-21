@@ -55,7 +55,7 @@
 
 /* Cursor or Display Shift defines */
 #define SHIFT_CUR_LEFT    0b00000100  /* Cursor shifts to the left   */
-#define SHIFT_CUR_RIGHT   0b00000101  /* Cursor shifts to the right  */
+#define SHIFT_CUR_RIGHT   0b00000111  /* Cursor shifts to the right  */
 #define SHIFT_DISP_LEFT   0b00000110  /* Display shifts to the left  */
 #define SHIFT_DISP_RIGHT  0b00000111  /* Display shifts to the right */
 
