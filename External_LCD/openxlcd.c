@@ -72,7 +72,7 @@ void OpenXLCD(unsigned char lcdtype)
 
         // Set entry mode inc, no shift
         while(BusyXLCD());              // Wait if LCD busy
-        WriteCmdXLCD(SHIFT_CUR_LEFT);   // Entry Mode
+        WriteCmdXLCD(SHIFT_DISP_LEFT);   // Entry Mode
 
         // Set DD Ram address to 0
         while(BusyXLCD());              // Wait if LCD busy

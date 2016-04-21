@@ -62,6 +62,7 @@ void processBuffer(unsigned char index);
 void main(void)
 {
     unsigned char ch;
+    unsigned char test[] = "TEST";
     // Initialize the device
     SYSTEM_Initialize();
     LCD_Initialize();
@@ -92,7 +93,11 @@ void main(void)
 
     // Disable the Peripheral Interrupts
     //INTERRUPT_PeripheralInterruptDisable();
-    
+    //*********** Set the starting address in the LCD RAM for display. This determines the location of display ********	
+	SetDDRamAddr(0x80);
+		while( BusyXLCD() );		//wait until LCD controller is busy
+	putsXLCD(test);			//Display string of text
+
     while (1)
     {
         if ((ch = readKeypad()) != 'Z'){
@@ -455,6 +460,7 @@ void LCD_Initialize(void){
     ADCON1 = 0xFF;
     config = EIGHT_BIT & LINES_5X7;
     OpenXLCD(config);
+    while( BusyXLCD() );		//wait until LCD controller is busy
 }
 
 /**

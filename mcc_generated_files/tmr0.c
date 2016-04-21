@@ -202,9 +202,9 @@ void checkClockForTarget(void){
 }
 
 void updateClockOutput(void){
-  lcdBuffers[0][BUFFER_START_00  ] = inputBuffer[0];
-            lcdBuffers[0][BUFFER_START_00+1] = inputBuffer[1];
-            lcdBuffers[0][BUFFER_START_00+3] = inputBuffer[2];
+    lcdBuffers[0][BUFFER_START_00  ] = inputBuffer[0];
+    lcdBuffers[0][BUFFER_START_00+1] = inputBuffer[1];
+    lcdBuffers[0][BUFFER_START_00+3] = inputBuffer[2];
     lcdBuffers[0][BUFFER_START_00+4] = inputBuffer[3];
 }
 
