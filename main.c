@@ -347,22 +347,22 @@ void processBuffer(unsigned char index){
             lcdBuffers[0][BUFFER_START_00+4] = inputBuffer[3];
             break;
         case 1: //main alarm time
-            lcdBuffers[0][BUFFER_START_01  ] = inputBuffer[0];
-            lcdBuffers[0][BUFFER_START_01+1] = inputBuffer[1];
-            lcdBuffers[0][BUFFER_START_01+3] = inputBuffer[2];
-            lcdBuffers[0][BUFFER_START_01+4] = inputBuffer[3];
+            lcdBuffers[1][BUFFER_START_01  ] = inputBuffer[0];
+            lcdBuffers[1][BUFFER_START_01+1] = inputBuffer[1];
+            lcdBuffers[1][BUFFER_START_01+3] = inputBuffer[2];
+            lcdBuffers[1][BUFFER_START_01+4] = inputBuffer[3];
             break;
         case 2: //set alarm time
-            lcdBuffers[0][BUFFER_START_20  ] = inputBuffer[0];
-            lcdBuffers[0][BUFFER_START_20+1] = inputBuffer[1];
-            lcdBuffers[0][BUFFER_START_20+3] = inputBuffer[2];
-            lcdBuffers[0][BUFFER_START_20+4] = inputBuffer[3];
+            lcdBuffers[4][BUFFER_START_20  ] = inputBuffer[0];
+            lcdBuffers[4][BUFFER_START_20+1] = inputBuffer[1];
+            lcdBuffers[4][BUFFER_START_20+3] = inputBuffer[2];
+            lcdBuffers[4][BUFFER_START_20+4] = inputBuffer[3];
             break;
         case 3: //set clock time
-            lcdBuffers[0][BUFFER_START_30  ] = inputBuffer[0];
-            lcdBuffers[0][BUFFER_START_30+1] = inputBuffer[1];
-            lcdBuffers[0][BUFFER_START_30+3] = inputBuffer[2];
-            lcdBuffers[0][BUFFER_START_30+4] = inputBuffer[3];
+            lcdBuffers[6][BUFFER_START_30  ] = inputBuffer[0];
+            lcdBuffers[6][BUFFER_START_30+1] = inputBuffer[1];
+            lcdBuffers[6][BUFFER_START_30+3] = inputBuffer[2];
+            lcdBuffers[6][BUFFER_START_30+4] = inputBuffer[3];
             break;
     }
     iBuffer = 0;
@@ -373,10 +373,48 @@ void updateLcd(unsigned char index){
 }
 
 void initLcdBuffers(void){
+    char ch;
     int i = 0;
-    char* ptr1 = "     __:__      \0";
-    while (*(ptr1++) != '\0'){
-        lcdBuffers[0][i++] = ptr1[-1];
+    char* ptr1 = LINE00;
+    char* ptr2 = LINE01;
+    char* ptr3 = LINE10;
+    char* ptr4 = LINE11;
+    char* ptr5 = LINE20;
+    char* ptr6 = LINE21;
+    char* ptr7 = LINE30;
+    char* ptr8 = LINE31;
+
+    i=0;
+    while ((ch=(*(ptr1++))) != '\0'){
+        lcdBuffers[0][i++] = ch;
+    }
+    i=0;
+    while ((ch=(*(ptr2++))) != '\0'){
+        lcdBuffers[1][i++] = ch;
+    }
+    i=0;
+    while ((ch=(*(ptr3++))) != '\0'){
+        lcdBuffers[2][i++] = ch;
+    }
+    i=0;
+    while ((ch=(*(ptr4++))) != '\0'){
+        lcdBuffers[3][i++] = ch;
+    }
+    i=0;
+    while ((ch=(*(ptr5++))) != '\0'){
+        lcdBuffers[4][i++] = ch;
+    }
+    i=0;
+    while ((ch=(*(ptr6++))) != '\0'){
+        lcdBuffers[5][i++] = ch;
+    }
+    i=0;
+    while ((ch=(*(ptr7++))) != '\0'){
+        lcdBuffers[6][i++] = ch;
+    }
+    i=0;
+    while ((ch=(*(ptr8++))) != '\0'){
+        lcdBuffers[7][i++] = ch;
     }
 }
 /**
