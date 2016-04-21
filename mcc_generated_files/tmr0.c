@@ -154,6 +154,7 @@ void updateClock(void){
         checkUserTimers();
         if (++masterSecond > 59){
             masterSecond = 0;
+            updateClockOutput();
             if (++masterMinute > 59){
                 masterMinute = 0;
                 newMinuteOccurred = 1;
@@ -201,7 +202,10 @@ void checkClockForTarget(void){
 }
 
 void updateClockOutput(void){
-  int x = 0;  
+  lcdBuffers[0][BUFFER_START_00  ] = inputBuffer[0];
+            lcdBuffers[0][BUFFER_START_00+1] = inputBuffer[1];
+            lcdBuffers[0][BUFFER_START_00+3] = inputBuffer[2];
+    lcdBuffers[0][BUFFER_START_00+4] = inputBuffer[3];
 }
 
 /**

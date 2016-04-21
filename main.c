@@ -101,7 +101,7 @@ void main(void)
         runStateMachine();
         
         if (lcdNeedsUpdate){
-            updateLcd(0);
+            updateLcd(menuState);
         }
     }
     return;
@@ -370,7 +370,38 @@ void processBuffer(unsigned char index){
 }
 
 void updateLcd(unsigned char index){
-    // to be developed
+    char* lineOneTarget;
+    char* lineTwoTarget;
+    
+    switch(index){
+        case 0:
+            lineOneTarget = lcdBuffers[0];
+            lineTwoTarget = lcdBuffers[1];
+            break;
+        case 1:
+            lineOneTarget = lcdBuffers[2];
+            lineTwoTarget = lcdBuffers[3];
+            break;
+        case 2:
+            lineOneTarget = lcdBuffers[4];
+            lineTwoTarget = lcdBuffers[5];
+            break;
+        case 3:
+            lineOneTarget = lcdBuffers[6];
+            lineTwoTarget = lcdBuffers[7];
+            break;
+    }
+    //*********** Set the starting address in the LCD RAM for display. This determines the location of display ********	
+	SetDDRamAddr(0x80);
+		while( BusyXLCD() );		//wait until LCD controller is busy
+	putsXLCD(lineOneTarget);			//Display string of text
+		while( BusyXLCD() );		//wait until LCD controller is busy
+        
+     //********** Set the address in second line for display ****************************************************		
+	SetDDRamAddr(0xC1);
+		while( BusyXLCD() );		//wait until LCD controller is busy
+	putsXLCD(lineTwoTarget);					//Display string of text
+		while( BusyXLCD() );		//wait until LCD controller is busy
 }
 
 void initLcdBuffers(void){
