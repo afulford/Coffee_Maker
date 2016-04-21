@@ -50,6 +50,7 @@ SUBSTITUTE GOODS, TECHNOLOGY, SERVICES, OR ANY CLAIMS BY THIRD PARTIES
 void runMenu(char);
 void executeMenu(void);
 void initLcdBuffers(void);
+void LCD_Initialize(void);
 void runStateMachine(void);
 void updateLcd(unsigned char);
 unsigned char readKeypad(void);
@@ -63,7 +64,7 @@ void main(void)
     unsigned char ch;
     // Initialize the device
     SYSTEM_Initialize();
-
+    LCD_Initialize();
     // If using interrupts in PIC18 High/Low Priority Mode you need to enable the Global High and Low Interrupts
     // If using interrupts in PIC Mid-Range Compatibility Mode you need to enable the Global and Peripheral Interrupts
     // Use the following macros to:
@@ -417,6 +418,14 @@ void initLcdBuffers(void){
         lcdBuffers[7][i++] = ch;
     }
 }
+
+void LCD_Initialize(void){
+    unsigned char config = 0xFF;
+    ADCON1 = 0xFF;
+    config = EIGHT_BIT & LINES_5X7;
+    OpenXLCD(config);
+}
+
 /**
  End of File
 */

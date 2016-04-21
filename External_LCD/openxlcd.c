@@ -1,6 +1,5 @@
 #include <p18cxxx.h>
-#include "delays.h"
-#include <xlcd.h>
+#include "xlcd.h"
 
 /********************************************************************
 *       Function Name:  OpenXLCD                                    *
@@ -43,11 +42,14 @@ void OpenXLCD(unsigned char lcdtype)
         DelayPORXLCD();
  //-------------------reset procedure through software----------------------       
 		 WriteCmdXLCD(0x30);
-			Delay10KTCYx(0x05);
+			//Delay10KTCYx(0x05); delay of 50 instructions
+            DelayFor18TCY();
+            DelayFor18TCY();
+            DelayFor18TCY();
 
 		 WriteCmdXLCD(0x30);
-			Delay10KTCYx(0x01);
-
+			//Delay10KTCYx(0x01); delay of 10 instructions
+            DelayFor18TCY();
 
 		 WriteCmdXLCD(0x32);
 		while( BusyXLCD() );
