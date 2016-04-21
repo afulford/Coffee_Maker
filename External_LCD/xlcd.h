@@ -31,18 +31,19 @@
 /* #define UPPER */
 
 /* DATA_PORT defines the port to which the LCD data lines are connected */
+
 #define DATA_PORT      PORTD
 #define TRIS_DATA_PORT TRISD
 
 /* CTRL_PORT defines the port where the control lines are connected.
  * These are just samples, change to match your application.
  */
-#define RW_PIN   LATAbits.LATA2   /* PORT for RW */ 
-#define TRIS_RW  TRISAbits.TRISA2    /* TRIS for RW */ 
-#define RS_PIN   LATAbits.LATA3   /* PORT for RS */ 
-#define TRIS_RS  TRISAbits.TRISA3    /* TRIS for RS */ 
-#define E_PIN    LATAbits.LATA1   /* PORT for D  */ 
-#define TRIS_E   TRISAbits.TRISA1    /* TRIS for E  */
+#define RW_PIN   LATBbits.LATB4   /* PORT for RW */ 
+#define TRIS_RW  TRISBbits.TRISB4    /* TRIS for RW */ 
+#define RS_PIN   LATBbits.LATB5   /* PORT for RS */ 
+#define TRIS_RS  TRISBbits.TRISB5    /* TRIS for RS */ 
+#define E_PIN    LATBbits.LATB3   /* PORT for D  */ 
+#define TRIS_E   TRISBbits.TRISB3    /* TRIS for E  */
 
 /* Display ON/OFF Control defines */
 #define DON         0b00001111  /* Display on      */
@@ -71,17 +72,17 @@
 /* OpenXLCD
  * Configures I/O pins for external LCD
  */
-void OpenXLCD(PARAM_SCLASS unsigned char);
+void OpenXLCD(unsigned char);
 
 /* SetCGRamAddr
  * Sets the character generator address
  */
-void SetCGRamAddr(PARAM_SCLASS unsigned char);
+void SetCGRamAddr(unsigned char);
 
 /* SetDDRamAddr
  * Sets the display data address
  */
-void SetDDRamAddr(PARAM_SCLASS unsigned char);
+void SetDDRamAddr(unsigned char);
 
 /* BusyXLCD
  * Returns the busy status of the LCD
@@ -101,12 +102,12 @@ char ReadDataXLCD(void);
 /* WriteCmdXLCD
  * Writes a command to the LCD
  */
-void WriteCmdXLCD(PARAM_SCLASS unsigned char);
+void WriteCmdXLCD(unsigned char);
 
 /* WriteDataXLCD
  * Writes a data byte to the LCD
  */
-void WriteDataXLCD(PARAM_SCLASS char);
+void WriteDataXLCD(char);
 
 /* putcXLCD
  * A putc is a write
@@ -116,12 +117,12 @@ void WriteDataXLCD(PARAM_SCLASS char);
 /* putsXLCD
  * Writes a string of characters to the LCD
  */
-void putsXLCD(PARAM_SCLASS char *);
+void putsXLCD(char *);
 
 /* putrsXLCD
  * Writes a string of characters in ROM to the LCD
  */
-void putrsXLCD(const rom char *);
+void putrsXLCD(const char *);
 
 /* User defines these routines according to the oscillator frequency */
 extern void DelayFor18TCY(void);

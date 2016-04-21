@@ -46,7 +46,7 @@ SUBSTITUTE GOODS, TECHNOLOGY, SERVICES, OR ANY CLAIMS BY THIRD PARTIES
 
 #include "mcc_generated_files/mcc.h"
 #include "mcc_generated_files/globalHeader.h"
-
+#include "External_LCD/xlcd.h"
 void runMenu(char);
 void executeMenu(void);
 void initLcdBuffers(void);
@@ -223,18 +223,18 @@ void runStateMachine(void){
 
 char readKeypad(void){
     unsigned char keypadInput = 'Z';
-    unsigned char keypad1 = PORTCbits.RC5;
-    unsigned char keypad2 = PORTCbits.RC2;
-    unsigned char keypad3 = PORTAbits.RA7;
-    unsigned char keypad4 = PORTCbits.RC4;
-    unsigned char keypad5 = PORTCbits.RC3;
-    unsigned char keypad6 = PORTAbits.RA6;
-    unsigned char keypad7 = PORTDbits.RD3;
-    unsigned char keypad8 = PORTDbits.RD0;
+    unsigned char keypad1 = PORTAbits.RA5;
+    unsigned char keypad2 = PORTAbits.RA7;
+    unsigned char keypad3 = PORTCbits.RC2;
+    unsigned char keypad4 = PORTAbits.RA3;
+    unsigned char keypad5 = PORTEbits.RE2;
+    unsigned char keypad6 = PORTCbits.RC1;
+    unsigned char keypad7 = PORTAbits.RA2;
+    unsigned char keypad8 = PORTEbits.RE1;
     unsigned char keypad9 = PORTCbits.RC0;
-    unsigned char keypad0 = PORTDbits.RD1;
-    unsigned char keypadS = PORTDbits.RD2;
-    unsigned char keypadP = PORTCbits.RC1;
+    unsigned char keypad0 = PORTEbits.RE0;
+    unsigned char keypadS = PORTAbits.RA1;
+    unsigned char keypadP = PORTAbits.RA6;
     
     if(keypad1 == 1){
         keypadInput = '1';

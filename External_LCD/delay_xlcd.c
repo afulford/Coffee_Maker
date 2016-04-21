@@ -50,7 +50,7 @@ void DelayXLCD(void)
 {
 	unsigned char i=0;
 	
-	for(i=0;i<25;i++);
+	for(i=0;i<9;i++);
 
 }
 
@@ -58,7 +58,7 @@ void DelayFor18TCY(void)
 {
 	unsigned char i=0;
 	
-	for(i=0;i<10;i++);
+	for(i=0;i<9;i++);
 
 }	
 

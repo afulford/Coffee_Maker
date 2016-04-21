@@ -79,24 +79,24 @@ ADCON1 = 0xFF;
 	config = FOUR_BIT  & LINES_5X7;
 //********  Configure LCD for four line communication and 5X7 line display *********************************
 	OpenXLCD(config);		
-		while( BusyXLCD() );		//wait untill LCD controller is busy
+		while( BusyXLCD() );		//wait until LCD controller is busy
 
 //*********** Set the starting address in the LCD RAM for display. This determines the location of display ********	
 	SetDDRamAddr(0x80);
-		while( BusyXLCD() );		//wait untill LCD controller is busy
+		while( BusyXLCD() );		//wait until LCD controller is busy
 	putsXLCD(XLCD_Disp1);			//Display string of text
-		while( BusyXLCD() );		//wait untill LCD controller is busy
+		while( BusyXLCD() );		//wait until LCD controller is busy
 
 //********** Set the address in second line for display ****************************************************		
 	SetDDRamAddr(0xC1);
-		while( BusyXLCD() );		//wait untill LCD controller is busy
+		while( BusyXLCD() );		//wait until LCD controller is busy
 	putsXLCD(XLCD_Disp2);					//Display string of text
-		while( BusyXLCD() );		//wait untill LCD controller is busy
-	putcXLCD(0x5F);					//dsiplay some chrecter
-	 	while( BusyXLCD() );		//wait untill LCD controller is busy
+		while( BusyXLCD() );		//wait until LCD controller is busy
+	putcXLCD(0x5F);					//display some character
+	 	while( BusyXLCD() );		//wait until LCD controller is busy
 		 
 	SetDDRamAddr(0x20);
-		while( BusyXLCD() );		//wait untill LCD controller is busy
+		while( BusyXLCD() );		//wait until LCD controller is busy
 
 	while(1);					//end of program		
 		
