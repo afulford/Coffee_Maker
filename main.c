@@ -373,10 +373,48 @@ void updateLcd(unsigned char index){
 }
 
 void initLcdBuffers(void){
+    char ch;
     int i = 0;
-    char* ptr1 = "     __:__      \0";
-    while (*(ptr1++) != '\0'){
-        lcdBuffers[0][i++] = ptr1[-1];
+    char* ptr1 = LINE00;
+    char* ptr2 = LINE01;
+    char* ptr3 = LINE10;
+    char* ptr4 = LINE11;
+    char* ptr5 = LINE20;
+    char* ptr6 = LINE21;
+    char* ptr7 = LINE30;
+    char* ptr8 = LINE31;
+
+    i=0;
+    while ((ch=(*(ptr1++))) != '\0'){
+        lcdBuffers[0][i++] = ch;
+    }
+    i=0;
+    while ((ch=(*(ptr2++))) != '\0'){
+        lcdBuffers[1][i++] = ch;
+    }
+    i=0;
+    while ((ch=(*(ptr3++))) != '\0'){
+        lcdBuffers[2][i++] = ch;
+    }
+    i=0;
+    while ((ch=(*(ptr4++))) != '\0'){
+        lcdBuffers[3][i++] = ch;
+    }
+    i=0;
+    while ((ch=(*(ptr5++))) != '\0'){
+        lcdBuffers[4][i++] = ch;
+    }
+    i=0;
+    while ((ch=(*(ptr6++))) != '\0'){
+        lcdBuffers[5][i++] = ch;
+    }
+    i=0;
+    while ((ch=(*(ptr7++))) != '\0'){
+        lcdBuffers[6][i++] = ch;
+    }
+    i=0;
+    while ((ch=(*(ptr8++))) != '\0'){
+        lcdBuffers[7][i++] = ch;
     }
 }
 /**

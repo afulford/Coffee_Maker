@@ -30,6 +30,16 @@ extern "C" {
 #define CYCLES_PER_SECOND 24
 #define TARGET_CLEAR_VALUE 99
     
+//LCD messages
+#define LINE00 "     __:__      \0"
+#define LINE01 " X   __:__      \0"
+#define LINE10 "  1: Set Alarm  \0"
+#define LINE11 "  2: Set Clock  \0"
+#define LINE20 "  Alarm: __:__  \0"
+#define LINE21 "1:Grind   2:Brew\0"
+#define LINE30 "  Time: __:__   \0"
+#define LINE31 "                \0"
+
 //LCD Buffer Variable Locations
 #define BUFFER_START_00 5
 #define BUFFER_START_01 5
@@ -72,7 +82,7 @@ unsigned char settingState = 0; // 0 -> nothing, 1 -> grind, 2 -> brew
 unsigned char menuState    = 0; // "GUI"
 
 //Character buffers
-char lcdBuffers[4][32] = {""};//{"     __:__      X    __:__        1: Set Alarm    2: Set Clock    Alarm: __:__  1:Grind   2:Brew   Time: __:__                  "};
+char lcdBuffers[8][16];
 char inputBuffer[4];
 
 //character buffer position
