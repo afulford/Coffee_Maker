@@ -62,7 +62,6 @@ void processBuffer(unsigned char index);
 void main(void)
 {
     unsigned char ch;
-    unsigned char test[] = "TEST";
     // Initialize the device
     SYSTEM_Initialize();
     LCD_Initialize();
@@ -93,11 +92,16 @@ void main(void)
 
     // Disable the Peripheral Interrupts
     //INTERRUPT_PeripheralInterruptDisable();
-    //*********** Set the starting address in the LCD RAM for display. This determines the location of display ********	
-	SetDDRamAddr(0x80);
-		while( BusyXLCD() );		//wait until LCD controller is busy
-	putsXLCD(test);			//Display string of text
-
+    
+//	SetDDRamAddr(0x80);
+//	while( BusyXLCD() );
+//	putsXLCD("  Good Morning,");
+//    while( BusyXLCD() );
+//    SetDDRamAddr(0xC0);
+//	while( BusyXLCD() );
+//	putsXLCD("    Stefony");				
+//	while( BusyXLCD() );	
+	
     while (1)
     {
         if ((ch = readKeypad()) != 'Z'){
@@ -133,11 +137,13 @@ void runStateMachine(void){
                         }
                     }
                         
-                    if (GRIND_PUSHED){
+                    //if (GRIND_PUSHED){
+                    if (grindPushed){
                         grindCommand = 1;
                     }
                         
-                    if (BREW_PUSHED){
+                    //if (BREW_PUSHED){
+                    if (brewPushed){
                         brewCommand = 1;
                     }
                         
@@ -162,7 +168,8 @@ void runStateMachine(void){
                         machineState = 2;
                         MOTOR_OFF;
                     }
-                    if (BREW_PUSHED){
+                    //if (BREW_PUSHED){
+                    if (brewPushed){
                         //brewCommand = 1;
                         timer40Set = 0;
                         MOTOR_OFF;
@@ -184,7 +191,8 @@ void runStateMachine(void){
                     // if SENSE_TEMP is 4V
                         //HEATER_OFF
                         //machineState = 3
-                    if (GRIND_PUSHED){
+                    //if (GRIND_PUSHED){
+                    if (grindPushed){
                         //grindCommand = 1;
                         HEATER_OFF;
                         machineState = 1;
@@ -274,10 +282,18 @@ char readKeypad(void){
         keypadInput = '0';
     }
     else if(keypadS == 1){
-        keypadInput = '*';
+        if (!machineState && !menuState){
+            brewPushed = 1;
+        } else {
+            keypadInput = '*';
+        }
     }
     else if(keypadP == 1){
-        keypadInput = '#';
+        if (!machineState && !menuState){
+            grindPushed = 1;
+        } else {
+            keypadInput = '#';
+        }
     }
     return keypadInput;
 }
@@ -286,6 +302,7 @@ void runMenu(unsigned char key){
     switch(menuState){
         case 0:
             // update LCD only
+            menuState = 1;
             break;
         case 1:
             if (key == '1'){
@@ -404,7 +421,7 @@ void updateLcd(unsigned char index){
 		while( BusyXLCD() );		//wait until LCD controller is busy
         
      //********** Set the address in second line for display ****************************************************		
-	SetDDRamAddr(0xC1);
+	SetDDRamAddr(0xC0);
 		while( BusyXLCD() );		//wait until LCD controller is busy
 	putsXLCD(lineTwoTarget);					//Display string of text
 		while( BusyXLCD() );		//wait until LCD controller is busy
@@ -461,7 +478,9 @@ void LCD_Initialize(void){
     ADCON1 = 0xFF;
     config = EIGHT_BIT & LINES_5X7;
     OpenXLCD(config);
-    while( BusyXLCD() );		//wait until LCD controller is busy
+    while( BusyXLCD() );
+    initLcdBuffers();
+    updateLcd(0);
 }
 
 /**

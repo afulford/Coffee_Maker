@@ -64,7 +64,7 @@ void OpenXLCD(unsigned char lcdtype)
         while(BusyXLCD());              // Wait if LCD busy
         WriteCmdXLCD(DOFF&CURSOR_OFF&BLINK_OFF);        // Display OFF/Blink OFF
         while(BusyXLCD());              // Wait if LCD busy
-        WriteCmdXLCD(DON&CURSOR_ON&BLINK_ON);           // Display ON/Blink ON
+        WriteCmdXLCD(DON&CURSOR_OFF&BLINK_OFF);           // Display ON/Blink ON
 
         // Clear display
         while(BusyXLCD());              // Wait if LCD busy

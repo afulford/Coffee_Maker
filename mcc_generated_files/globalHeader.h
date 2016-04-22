@@ -13,13 +13,13 @@ extern "C" {
 #endif
 
 // I/O Macros
-#define MOTOR_ON 10
-#define MOTOR_OFF 10
-#define HEATER_ON 10
-#define HEATER_OFF 10
-#define SENSE_TEMP 10
-#define GRIND_PUSHED 10
-#define BREW_PUSHED 10
+#define MOTOR_ON (LATBbits.LATB4 = 1)
+#define MOTOR_OFF (LATBbits.LATB4 = 0)
+#define HEATER_ON (LATBbits.LATB5 = 1)
+#define HEATER_OFF (LATBbits.LATB5 = 0)
+//#define SENSE_TEMP 10
+//#define GRIND_PUSHED 0
+//#define BREW_PUSHED 0
 #define SWITCHES_CLOSED 1
 
 // TIMER TARGETS
@@ -49,6 +49,8 @@ extern "C" {
 #define BUFFER_START_01 5
 #define BUFFER_START_20 9
 #define BUFFER_START_30 9
+    
+#define ASCII_OFFSET 0x30
 
 //timer global variables
 unsigned char masterHour = 0;
@@ -86,12 +88,15 @@ unsigned char settingState = 0; // 0 -> nothing, 1 -> grind, 2 -> brew
 unsigned char menuState    = 0; // "GUI"
 
 //Character buffers
-char lcdBuffers[8][16];
+char lcdBuffers[8][17] = {0};
 char inputBuffer[4];
 
 //character buffer position
 unsigned char iBuffer = 0;
 
+//special button pushed for BREW and GRIND
+unsigned char grindPushed = 0;
+unsigned char brewPushed  = 0;
 
 #ifdef	__cplusplus
 }

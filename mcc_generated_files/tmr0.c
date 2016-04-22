@@ -72,7 +72,7 @@ void TMR0_Initialize(void)
     // Set TMR0 to the options selected in the User Interface
 
     // T0PS 1:256; T08BIT 8-bit; T0SE Increment_hi_lo; T0CS T0CKI; TMR0ON enabled; PSA assigned; 
-    T0CON = 0xF7;
+    T0CON = 0xD7;
 
     // TMR0H 0; 
     TMR0H = 0x00;
@@ -205,12 +205,12 @@ void checkClockForTarget(void){
 void updateClockOutput(char key){
   switch(key){
     case 'm':
-        lcdBuffers[0][BUFFER_START_00+3] =  int(masterMinute)%10;     //tens
-        lcdBuffers[0][BUFFER_START_00+4] = (int(masterMinute)/10)%10; //ones
+        lcdBuffers[0][BUFFER_START_00+4] = ASCII_OFFSET + (int)masterMinute%10;     //tens
+        lcdBuffers[0][BUFFER_START_00+3] = ASCII_OFFSET + (int)((masterMinute)/10)%10; //ones
         break;
     case 'h':
-        lcdBuffers[0][BUFFER_START_00+0] =  int(masterHour)%10;       //tens
-        lcdBuffers[0][BUFFER_START_00+1] = (int(masterHour)/10)%10;   //ones
+        lcdBuffers[0][BUFFER_START_00+1] = ASCII_OFFSET + (int)(masterHour)%10;       //tens
+        lcdBuffers[0][BUFFER_START_00+0] = ASCII_OFFSET + (int)((masterHour)/10)%10;   //ones
         break;
   }
   lcdNeedsUpdate = 1;
