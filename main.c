@@ -54,7 +54,9 @@ void LCD_Initialize(void);
 void runStateMachine(void);
 void updateLcd(unsigned char);
 unsigned char readKeypad(void);
-void processBuffer(unsigned char index);
+unsigned char readSingleKey(void);
+void updateLcdBuffer(unsigned char index);
+void processClockBuffer (unsigned char index);
 /*
                          Main application
  */
@@ -104,7 +106,7 @@ void main(void)
 	
     while (1)
     {
-        if ((ch = readKeypad()) != 'Z'){
+        if ((ch = readSingleKey()) != 'Z'){
             runMenu(ch);
         }
         runStateMachine();
@@ -137,13 +139,13 @@ void runStateMachine(void){
                         }
                     }
                         
-                    //if (GRIND_PUSHED){
-                    if (grindPushed){
+                    if (GRIND_PUSHED){
+                    //if (grindPushed){
                         grindCommand = 1;
                     }
                         
-                    //if (BREW_PUSHED){
-                    if (brewPushed){
+                    if (BREW_PUSHED){
+                    //if (brewPushed){
                         brewCommand = 1;
                     }
                         
@@ -168,8 +170,8 @@ void runStateMachine(void){
                         machineState = 2;
                         MOTOR_OFF;
                     }
-                    //if (BREW_PUSHED){
-                    if (brewPushed){
+                    if (BREW_PUSHED){
+                    //if (brewPushed){
                         //brewCommand = 1;
                         timer40Set = 0;
                         MOTOR_OFF;
@@ -191,8 +193,8 @@ void runStateMachine(void){
                     // if SENSE_TEMP is 4V
                         //HEATER_OFF
                         //machineState = 3
-                    //if (GRIND_PUSHED){
-                    if (grindPushed){
+                    if (GRIND_PUSHED){
+                    //if (grindPushed){
                         //grindCommand = 1;
                         HEATER_OFF;
                         machineState = 1;
@@ -236,7 +238,15 @@ void runStateMachine(void){
         }
 }
 
-char readKeypad(void){
+unsigned char readSingleKey(void){
+    char goodChar;
+    goodChar = readKeypad();
+    
+    while(readKeypad() != 'Z');
+    return goodChar;
+}
+
+unsigned char readKeypad(void){
     unsigned char keypadInput = 'Z';
     unsigned char keypad1 = PORTAbits.RA5;
     unsigned char keypad2 = PORTAbits.RA7;
@@ -282,18 +292,10 @@ char readKeypad(void){
         keypadInput = '0';
     }
     else if(keypadS == 1){
-        if (!machineState && !menuState){
-            brewPushed = 1;
-        } else {
-            keypadInput = '*';
-        }
+        keypadInput = '*';
     }
     else if(keypadP == 1){
-        if (!machineState && !menuState){
-            grindPushed = 1;
-        } else {
-            keypadInput = '#';
-        }
+        keypadInput = '#';
     }
     return keypadInput;
 }
@@ -318,7 +320,7 @@ void runMenu(unsigned char key){
             
         case 2:
             if (key == '#'){
-                processBuffer(menuState);
+                updateLcdBuffer(menuState);
                 menuState = 0;
             }
             else if (key == '*'){
@@ -334,7 +336,7 @@ void runMenu(unsigned char key){
             
         case 3:
             if (key == '#'){
-                processBuffer(menuState);
+                processClockBuffer(menuState);
                 menuState = 4;
             }
             else if (key == '*'){
@@ -342,6 +344,7 @@ void runMenu(unsigned char key){
             }
             else if ((key >= '0') && (key <= '9')){
                 inputBuffer[iBuffer++] = key;
+                updateLcdBuffer(menuState);
                 if (iBuffer > 3) {
                     iBuffer = 0;
                 }
@@ -362,7 +365,7 @@ void runMenu(unsigned char key){
     updateLcd(menuState);
 }
 
-void processBuffer(unsigned char index){
+void updateLcdBuffer (unsigned char index){
     switch (index){
         case 0: //main clock time
             lcdBuffers[0][BUFFER_START_00  ] = inputBuffer[0];
@@ -383,13 +386,32 @@ void processBuffer(unsigned char index){
             lcdBuffers[4][BUFFER_START_20+4] = inputBuffer[3];
             break;
         case 3: //set clock time
-            lcdBuffers[6][BUFFER_START_30  ] = inputBuffer[0];
-            lcdBuffers[6][BUFFER_START_30+1] = inputBuffer[1];
-            lcdBuffers[6][BUFFER_START_30+3] = inputBuffer[2];
-            lcdBuffers[6][BUFFER_START_30+4] = inputBuffer[3];
+            switch(iBuffer){
+                case 1:
+                    lcdBuffers[6][BUFFER_START_30  ] = inputBuffer[0];
+                    break;
+                case 2:
+                    lcdBuffers[6][BUFFER_START_30+1] = inputBuffer[1];
+                    break;
+                case 3:
+                    lcdBuffers[6][BUFFER_START_30+3] = inputBuffer[2];
+                    break;
+                case 4:
+                    lcdBuffers[6][BUFFER_START_30+4] = inputBuffer[3];
+                    break;
+            }
             break;
     }
     iBuffer = 0;
+}
+
+void processClockBuffer (unsigned char index){
+    // update the actual clock or alarm values
+    
+    switch (index) {
+        case 0:
+            break;
+    }
 }
 
 void updateLcd(unsigned char index){

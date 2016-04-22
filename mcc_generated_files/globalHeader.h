@@ -18,8 +18,8 @@ extern "C" {
 #define HEATER_ON (LATBbits.LATB5 = 1)
 #define HEATER_OFF (LATBbits.LATB5 = 0)
 //#define SENSE_TEMP 10
-//#define GRIND_PUSHED 0
-//#define BREW_PUSHED 0
+#define GRIND_PUSHED (LATBbits.LATB0 == 1)
+#define BREW_PUSHED (LATBbits.LATB1 == 1)
 #define SWITCHES_CLOSED 1
 
 // TIMER TARGETS
@@ -95,8 +95,8 @@ char inputBuffer[4];
 unsigned char iBuffer = 0;
 
 //special button pushed for BREW and GRIND
-unsigned char grindPushed = 0;
-unsigned char brewPushed  = 0;
+//unsigned char grindPushed = 0;
+//unsigned char brewPushed  = 0;
 
 #ifdef	__cplusplus
 }
