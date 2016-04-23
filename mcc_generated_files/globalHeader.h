@@ -18,8 +18,8 @@ extern "C" {
 #define HEATER_ON (LATBbits.LATB5 = 1)
 #define HEATER_OFF (LATBbits.LATB5 = 0)
 //#define SENSE_TEMP 10
-#define GRIND_PUSHED (LATBbits.LATB0 == 1)
-#define BREW_PUSHED (LATBbits.LATB1 == 1)
+#define GRIND_PUSHED (PORTBbits.RB0 == 1)
+#define BREW_PUSHED (PORTBbits.RB1 == 1)
 #define SWITCHES_CLOSED 1
 
 // TIMER TARGETS
