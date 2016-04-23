@@ -317,11 +317,10 @@ void runMenu(unsigned char key){
                 menuState = 0;
             }
             break;
-            
-        case 2:
+        case 2://clock
             if (key == '#'){
-                updateLcdBuffer(menuState);
-                menuState = 0;
+                processClockBuffer(menuState);
+                menuState = 4;
             }
             else if (key == '*'){
                 menuState = 1;
@@ -333,11 +332,10 @@ void runMenu(unsigned char key){
                 }
             }
             break;
-            
-        case 3:
+        case 3://alarm
             if (key == '#'){
                 processClockBuffer(menuState);
-                menuState = 4;
+                menuState = 0;
             }
             else if (key == '*'){
                 menuState = 1;
@@ -380,10 +378,20 @@ void updateLcdBuffer (unsigned char index){
             lcdBuffers[1][BUFFER_START_01+4] = inputBuffer[3];
             break;
         case 2: //set alarm time
-            lcdBuffers[4][BUFFER_START_20  ] = inputBuffer[0];
-            lcdBuffers[4][BUFFER_START_20+1] = inputBuffer[1];
-            lcdBuffers[4][BUFFER_START_20+3] = inputBuffer[2];
-            lcdBuffers[4][BUFFER_START_20+4] = inputBuffer[3];
+            switch(iBuffer){
+                case 1:
+                    lcdBuffers[4][BUFFER_START_20  ] = inputBuffer[0];
+                    break;
+                case 2:
+                    lcdBuffers[4][BUFFER_START_20+1] = inputBuffer[1];
+                    break;
+                case 3:
+                    lcdBuffers[4][BUFFER_START_20+3] = inputBuffer[2];
+                    break;
+                case 4:
+                    lcdBuffers[4][BUFFER_START_20+4] = inputBuffer[3];
+                    break;
+            }
             break;
         case 3: //set clock time
             switch(iBuffer){
@@ -402,16 +410,33 @@ void updateLcdBuffer (unsigned char index){
             }
             break;
     }
-    iBuffer = 0;
+    //iBuffer = 0;
 }
 
 void processClockBuffer (unsigned char index){
-    // update the actual clock or alarm values
-    
     switch (index) {
-        case 0:
+        case 2:
+            masterMinute =  
+                ((unsigned char) inputBuffer[3])      +
+                ((unsigned char) inputBuffer[2] * 10) -
+                ((unsigned char) ASCII_OFFSET * 2)    ;
+            masterHour   =  
+                ((unsigned char) inputBuffer[1])      +
+                ((unsigned char) inputBuffer[0] * 10) -
+                ((unsigned char) ASCII_OFFSET * 2)    ;
+            break;
+        case 2:
+            targetMinute =  
+                ((unsigned char) inputBuffer[3])      +
+                ((unsigned char) inputBuffer[2] * 10) -
+                ((unsigned char) ASCII_OFFSET * 2)    ;
+            targetHour   =  
+                ((unsigned char) inputBuffer[1])      +
+                ((unsigned char) inputBuffer[0] * 10) -
+                ((unsigned char) ASCII_OFFSET * 2)    ;
             break;
     }
+    iBuffer = 0;
 }
 
 void updateLcd(unsigned char index){
