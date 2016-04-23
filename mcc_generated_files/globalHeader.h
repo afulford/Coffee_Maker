@@ -39,7 +39,7 @@ extern "C" {
 #define LINE01 " X   __:__      \0" //main alarm time
 #define LINE10 "  1: Set Alarm  \0"
 #define LINE11 "  2: Set Clock  \0"
-#define LINE20 "  Alarm: __:__  \0" //set alarm time
+#define LINE20 " Alarm: __:__   \0" //set alarm time
 #define LINE21 "1:Grind   2:Brew\0"
 #define LINE30 "  Time: __:__   \0" //set clock time
 #define LINE31 "                \0"
@@ -47,8 +47,8 @@ extern "C" {
 //LCD Buffer Variable Locations
 #define BUFFER_START_00 5
 #define BUFFER_START_01 5
-#define BUFFER_START_20 9
-#define BUFFER_START_30 9
+#define BUFFER_START_20 8
+#define BUFFER_START_30 8
     
 #define ASCII_OFFSET 0x30
 

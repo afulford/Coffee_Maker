@@ -317,7 +317,7 @@ void runMenu(unsigned char key){
                 menuState = 0;
             }
             break;
-        case 2://clock
+        case 2://alarm
             if (key == '#'){
                 processClockBuffer(menuState);
                 menuState = 4;
@@ -327,12 +327,13 @@ void runMenu(unsigned char key){
             }
             else if ((key >= '0') && (key <= '9')){
                 inputBuffer[iBuffer++] = (char)key;
+                updateLcdBuffer(menuState);
                 if (iBuffer > 3) {
                     iBuffer = 0;
                 }
             }
             break;
-        case 3://alarm
+        case 3://clock
             if (key == '#'){
                 processClockBuffer(menuState);
                 menuState = 0;
@@ -341,7 +342,7 @@ void runMenu(unsigned char key){
                 menuState = 1;
             }
             else if ((key >= '0') && (key <= '9')){
-                inputBuffer[iBuffer++] = key;
+                inputBuffer[iBuffer++] = (char)key;
                 updateLcdBuffer(menuState);
                 if (iBuffer > 3) {
                     iBuffer = 0;
@@ -416,27 +417,24 @@ void updateLcdBuffer (unsigned char index){
 void processClockBuffer (unsigned char index){
     switch (index) {
         case 2:
-            masterMinute =  
-                ((unsigned char) inputBuffer[3])      +
-                ((unsigned char) inputBuffer[2] * 10) -
-                ((unsigned char) ASCII_OFFSET * 2)    ;
-            masterHour   =  
-                ((unsigned char) inputBuffer[1])      +
-                ((unsigned char) inputBuffer[0] * 10) -
-                ((unsigned char) ASCII_OFFSET * 2)    ;
-            break;
-        case 2:
             targetMinute =  
-                ((unsigned char) inputBuffer[3])      +
-                ((unsigned char) inputBuffer[2] * 10) -
-                ((unsigned char) ASCII_OFFSET * 2)    ;
+                ((unsigned char) inputBuffer[3]) - ((unsigned char) ASCII_OFFSET) +
+                (((unsigned char) inputBuffer[2] - ASCII_OFFSET) * 10);
             targetHour   =  
-                ((unsigned char) inputBuffer[1])      +
-                ((unsigned char) inputBuffer[0] * 10) -
-                ((unsigned char) ASCII_OFFSET * 2)    ;
+                ((unsigned char) inputBuffer[1]) - ((unsigned char) ASCII_OFFSET) +
+                (((unsigned char) inputBuffer[0] - ASCII_OFFSET) * 10);
+            break;
+        case 3:
+            masterMinute =  
+                ((unsigned char) inputBuffer[3]) - ((unsigned char) ASCII_OFFSET) +
+                (((unsigned char) inputBuffer[2] - ASCII_OFFSET) * 10);
+            masterHour   =  
+                ((unsigned char) inputBuffer[1]) - ((unsigned char) ASCII_OFFSET) +
+                (((unsigned char) inputBuffer[0] - ASCII_OFFSET) * 10);
             break;
     }
     iBuffer = 0;
+    updateLcdBuffer(0);
 }
 
 void updateLcd(unsigned char index){
