@@ -59,6 +59,22 @@
 #define PULL_UP_ENABLED      1
 #define PULL_UP_DISABLED     0
 
+// get/set IO_RA0 aliases
+#define IO_RA0_TRIS               TRISA0
+#define IO_RA0_LAT                LATA0
+#define IO_RA0_PORT               RA0
+#define IO_RA0_ANS                ANSA0
+#define IO_RA0_SetHigh()    do { LATA0 = 1; } while(0)
+#define IO_RA0_SetLow()   do { LATA0 = 0; } while(0)
+#define IO_RA0_Toggle()   do { LATA0 = ~LATA0; } while(0)
+#define IO_RA0_GetValue()         RA0
+#define IO_RA0_SetDigitalInput()    do { TRISA0 = 1; } while(0)
+#define IO_RA0_SetDigitalOutput()   do { TRISA0 = 0; } while(0)
+
+#define IO_RA0_SetAnalogMode()   do { ANSA0 = 1; } while(0)
+#define IO_RA0_SetDigitalMode()   do { ANSA0 = 0; } while(0)
+
+
 // get/set IO_RA1 aliases
 #define IO_RA1_TRIS               TRISA1
 #define IO_RA1_LAT                LATA1

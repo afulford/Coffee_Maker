@@ -127,14 +127,17 @@ void runStateMachine(void){
                 
                 if (SWITCHES_CLOSED){
                     if (targetAcquired){
+                        targetAcquired = 0;
                         // set grind cmd or brew cmd based on flag
                         if (settingState == 0){
                             brewCommand = grindCommand = 0;
                         }
                         else if (settingState == '1'){
+                            settingState = 0;
                             grindCommand = 1;
                         }
                         else if (settingState == '2'){
+                            settingState = 0;
                             brewCommand = 1;
                         }
                     }
@@ -151,9 +154,11 @@ void runStateMachine(void){
                         
                     if (grindCommand){
                         machineState = 1;
+                        grindCommand = 0;
                     }
                     if (brewCommand){
                         machineState = 2;
+                        brewCommand = 0;
                     }
                 }
                 break;
@@ -166,6 +171,7 @@ void runStateMachine(void){
                         timer40Set = 1;
                     }
                     if (timer40Expired){
+                        timer40Expired = 0;
                         timer40Set = 0;
                         machineState = 2;
                         MOTOR_OFF;
@@ -190,9 +196,10 @@ void runStateMachine(void){
                 if (SWITCHES_CLOSED){
                     HEATER_ON;
                     MOTOR_OFF;
-                    // if SENSE_TEMP is 4V
-                        //HEATER_OFF
-                        //machineState = 3
+                    if (SENSE_TEMP){
+                        HEATER_OFF;
+                        machineState = 3;
+                    }
                     if (GRIND_PUSHED){
                     //if (grindPushed){
                         //grindCommand = 1;

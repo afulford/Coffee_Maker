@@ -159,10 +159,12 @@ void updateClock(void){
             updateClockOutput('m');
             if (masterMinute >= MINUTES_PER_HOUR){
                 masterMinute = 0;
-                updateClockOutput('h');
+                updateClockOutput('m');
                 ++masterHour;
+                updateClockOutput('h');
                 if (masterHour >= HOURS_PER_DAY){
                     masterHour = 0;
+                    updateClockOutput('h');
                 }
             }
         }
