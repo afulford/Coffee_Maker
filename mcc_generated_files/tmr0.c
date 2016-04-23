@@ -154,12 +154,14 @@ void updateClock(void){
         checkUserTimers();
         if (++masterSecond >= SECONDS_PER_MINUTE){
             masterSecond = 0;
+            newMinuteOccurred = 1;
+            ++masterMinute;
             updateClockOutput('m');
-            if (++masterMinute >= MINUTES_PER_HOUR){
+            if (masterMinute >= MINUTES_PER_HOUR){
                 masterMinute = 0;
-                newMinuteOccurred = 1;
                 updateClockOutput('h');
-                if (++masterHour >= HOURS_PER_DAY){
+                ++masterHour;
+                if (masterHour >= HOURS_PER_DAY){
                     masterHour = 0;
                 }
             }

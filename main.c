@@ -131,10 +131,10 @@ void runStateMachine(void){
                         if (settingState == 0){
                             brewCommand = grindCommand = 0;
                         }
-                        else if (settingState == 1){
+                        else if (settingState == '1'){
                             grindCommand = 1;
                         }
-                        else if (settingState == 2){
+                        else if (settingState == '2'){
                             brewCommand = 1;
                         }
                     }
@@ -352,12 +352,12 @@ void runMenu(unsigned char key){
         case 4:
             if (key == '1'){
                 settingState = key;
-                lcdBuffers[1][0] = 'G';
+                lcdBuffers[1][1] = 'G';
                 menuState = 0;
             }
             if (key == '2'){
                 settingState = key;
-                lcdBuffers[1][0] = 'B';
+                lcdBuffers[1][1] = 'B';
                 menuState = 0;
             }
     }
@@ -415,6 +415,7 @@ void updateLcdBuffer (unsigned char index){
 }
 
 void processClockBuffer (unsigned char index){
+    unsigned char iLcd = 0;
     switch (index) {
         case 2:
             targetMinute =  
@@ -423,6 +424,7 @@ void processClockBuffer (unsigned char index){
             targetHour   =  
                 ((unsigned char) inputBuffer[1]) - ((unsigned char) ASCII_OFFSET) +
                 (((unsigned char) inputBuffer[0] - ASCII_OFFSET) * 10);
+            iLcd = 1;
             break;
         case 3:
             masterMinute =  
@@ -431,10 +433,11 @@ void processClockBuffer (unsigned char index){
             masterHour   =  
                 ((unsigned char) inputBuffer[1]) - ((unsigned char) ASCII_OFFSET) +
                 (((unsigned char) inputBuffer[0] - ASCII_OFFSET) * 10);
+            iLcd = 0;
             break;
     }
     iBuffer = 0;
-    updateLcdBuffer(0);
+    updateLcdBuffer(iLcd);
 }
 
 void updateLcd(unsigned char index){
