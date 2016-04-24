@@ -196,6 +196,7 @@ void runStateMachine(void){
                 if (SWITCHES_CLOSED){
                     HEATER_ON;
                     MOTOR_OFF;
+                    
                     if (SENSE_TEMP){
                         HEATER_OFF;
                         machineState = 3;

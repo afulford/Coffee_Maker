@@ -49,7 +49,7 @@
 void PIN_MANAGER_Initialize(void)
 {
     LATB = 0x0;
-    LATA = 0x0;
+    LATA = 0x1;
     ANSELE = 0x0;
     LATE = 0x0;
     LATD = 0x0;

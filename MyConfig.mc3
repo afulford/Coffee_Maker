@@ -934,7 +934,7 @@
       </entry>
       <entry>
          <key class="com.microchip.mcc.core.tokenManager.RegisterKey" moduleName="Pin Module" registerAlias="LATA"/>
-         <value>0</value>
+         <value>1</value>
       </entry>
       <entry>
          <key class="com.microchip.mcc.core.tokenManager.SettingKey" moduleName="Pin Module" registerAlias="RBI" settingAlias="priority"/>
@@ -1150,7 +1150,7 @@
       </entry>
       <entry>
          <key class="com.microchip.mcc.core.tokenManager.SettingKey" moduleName="Pin Module" registerAlias="LATA" settingAlias="LATA0"/>
-         <value>clear</value>
+         <value>set</value>
       </entry>
       <entry>
          <key class="com.microchip.mcc.core.tokenManager.CustomKey" moduleName="INTERNAL OSCILLATOR" name="pllMultiplier"/>
@@ -3617,7 +3617,7 @@
       </entry>
       <entry>
          <file>mcc_generated_files/pin_manager.c</file>
-         <hash>634ea6c3f8bb54a596fbc8aa09d6ee1a0dd6e7ecc07aac1c103b22c4283d8774</hash>
+         <hash>841457a40362f8bdd61268e9fa3b235c5f542749ed883706f8bf6b0de98e9f23</hash>
       </entry>
       <entry>
          <file>mcc_generated_files/tmr0.h</file>
