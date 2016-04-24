@@ -235,6 +235,25 @@
 #define IO_RB2_SetDigitalMode()   do { ANSB2 = 0; } while(0)
 
 
+// get/set IO_RB3 aliases
+#define IO_RB3_TRIS               TRISB3
+#define IO_RB3_LAT                LATB3
+#define IO_RB3_PORT               RB3
+#define IO_RB3_WPU                WPUB3
+#define IO_RB3_ANS                ANSB3
+#define IO_RB3_SetHigh()    do { LATB3 = 1; } while(0)
+#define IO_RB3_SetLow()   do { LATB3 = 0; } while(0)
+#define IO_RB3_Toggle()   do { LATB3 = ~LATB3; } while(0)
+#define IO_RB3_GetValue()         RB3
+#define IO_RB3_SetDigitalInput()    do { TRISB3 = 1; } while(0)
+#define IO_RB3_SetDigitalOutput()   do { TRISB3 = 0; } while(0)
+
+#define IO_RB3_SetPullup()    do { WPUB3 = 1; } while(0)
+#define IO_RB3_ResetPullup()   do { WPUB3 = 0; } while(0)
+#define IO_RB3_SetAnalogMode()   do { ANSB3 = 1; } while(0)
+#define IO_RB3_SetDigitalMode()   do { ANSB3 = 0; } while(0)
+
+
 // get/set IO_RB4 aliases
 #define IO_RB4_TRIS               TRISB4
 #define IO_RB4_LAT                LATB4

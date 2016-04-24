@@ -193,6 +193,14 @@ void checkUserTimers(void){
             timer40Expired = 1;
         }
     }
+    if (timer168Set){
+        if (++timer168Count > TIMER168_TARGET){
+            //timer168Set     = 0;
+            timer168Count   = 0;
+            timer168Expired = 1;
+        }
+    }
+    
 }
 
 void checkClockForTarget(void){

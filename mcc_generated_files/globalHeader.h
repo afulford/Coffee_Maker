@@ -17,7 +17,7 @@ extern "C" {
 #define MOTOR_OFF (LATBbits.LATB4 = 0)
 #define HEATER_ON ((LATBbits.LATB5 = 1) && (LATAbits.LATA0 = 0))
 #define HEATER_OFF ((LATBbits.LATB5 = 0) && (LATAbits.LATA0 = 1))
-#define SENSE_TEMP 0
+//#define SENSE_TEMP 0
 #define GRIND_PUSHED (PORTBbits.RB0 == 1)
 #define BREW_PUSHED (PORTBbits.RB1 == 1)
 #define SWITCHES_CLOSED 1
@@ -26,6 +26,7 @@ extern "C" {
 #define TIMER4_TARGET 4
 #define TIMER5_TARGET 5
 #define TIMER40_TARGET 40
+#define TIMER168_TARGET 168
     
 #define CYCLES_PER_SECOND 24
 #define TARGET_CLEAR_VALUE 99
@@ -70,17 +71,20 @@ unsigned char brewCommand  = 0; // only set this when ready to fire
 unsigned char grindCommand = 0; // only set this when ready to fire
 
 //user timer flags
-unsigned char timer4Set  = 0;
-unsigned char timer5Set  = 0;
-unsigned char timer40Set = 0;
-unsigned char timer4Expired  = 0;
-unsigned char timer5Expired  = 0;
-unsigned char timer40Expired = 0;
+unsigned char timer4Set   = 0;
+unsigned char timer5Set   = 0;
+unsigned char timer40Set  = 0;
+unsigned char timer168Set = 0;
+unsigned char timer4Expired   = 0;
+unsigned char timer5Expired   = 0;
+unsigned char timer40Expired  = 0;
+unsigned char timer168Expired = 0;
 
 //user timer counts
-unsigned char timer4Count  = 0;
-unsigned char timer5Count  = 0;
-unsigned char timer40Count = 0;
+unsigned char timer4Count   = 0;
+unsigned char timer5Count   = 0;
+unsigned char timer40Count  = 0;
+unsigned char timer168Count = 0;
 
 //state variables
 unsigned char machineState = 0; // [0:3]

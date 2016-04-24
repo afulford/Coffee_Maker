@@ -197,9 +197,18 @@ void runStateMachine(void){
                     HEATER_ON;
                     MOTOR_OFF;
                     
-                    if (SENSE_TEMP){
+                    /*if (SENSE_TEMP){
                         HEATER_OFF;
                         machineState = 3;
+                    }*/
+                    if (!timer168Set){
+                        timer168Set = 1;
+                    }
+                    if (timer168Expired){
+                        timer168Expired = 0;
+                        timer168Set = 0;
+                        machineState = 3;
+                        HEATER_OFF;
                     }
                     if (GRIND_PUSHED){
                     //if (grindPushed){
@@ -210,6 +219,9 @@ void runStateMachine(void){
                 } else {
                     HEATER_OFF;
                     machineState = 0;
+                    timer168Set = 0;
+                    timer168Expired = 0;
+                    timer168Count = 0;
                 }
                 break;
                 
